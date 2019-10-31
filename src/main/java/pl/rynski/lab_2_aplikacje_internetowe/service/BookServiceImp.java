@@ -5,6 +5,7 @@ import pl.rynski.lab_2_aplikacje_internetowe.model.Book;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,7 @@ public class BookServiceImp implements BookService {
         }
     }
 
-    public List<Book> getBooksWithStringInTitle(String text) {
+    public List<Book> getBooksByTitle(String text) {
         List<Book> books = bookList.stream().filter(book -> book.getTitle().contains(text)).collect(Collectors.toList());
         if(!books.isEmpty()) {
             return books;
@@ -71,22 +72,21 @@ public class BookServiceImp implements BookService {
         return true;
     }
 
-    public boolean modifyField(Long id, Book partialBook) {
+    public boolean modifyField(Long id, Map<String, Object> updates) {
         Optional<Book> toModify = bookList.stream().filter(book -> book.getId() == id).findFirst();
         if(!toModify.isPresent()) {
             return false;
         }
-        if(partialBook.getTitle() != null) {
-            toModify.get().setTitle(partialBook.getTitle());
-            return true;
-        } if(partialBook.getIsbn() != null) {
-            toModify.get().setIsbn(partialBook.getIsbn());
-            return true;
-        } if(partialBook.getAuthor() != null) {
-            toModify.get().setAuthor(partialBook.getAuthor());
-            return true;
+        if (updates.containsKey("isbn")) {
+            toModify.get().setIsbn((String) updates.get("isbn"));
         }
-        return false;
+        if (updates.containsKey("title")) {
+            toModify.get().setTitle((String) updates.get("title"));
+        }
+        if (updates.containsKey("author")) {
+            toModify.get().setAuthor((String) updates.get("author"));
+        }
+        return true;
     }
 
     public boolean deleteBook(Long id) {
