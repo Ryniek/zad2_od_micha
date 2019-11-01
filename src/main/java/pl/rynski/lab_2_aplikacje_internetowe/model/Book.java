@@ -1,6 +1,8 @@
 package pl.rynski.lab_2_aplikacje_internetowe.model;
 
-public class Book {
+import org.springframework.hateoas.ResourceSupport;
+
+public class Book extends ResourceSupport {
 
     private Long id;
     private String isbn;
@@ -17,7 +19,7 @@ public class Book {
         this.author = author;
     }
 
-    public Long getId() {
+    public Long getBookId() {
         return id;
     }
 

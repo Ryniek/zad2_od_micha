@@ -39,7 +39,7 @@ public class BookServiceImp implements BookService {
 
     @Override
     public Book getBookById(Long id) {
-        Optional<Book> first = bookList.stream().filter(book -> book.getId() == id).findFirst();
+        Optional<Book> first = bookList.stream().filter(book -> book.getBookId() == id).findFirst();
         if(first.isPresent()) {
             return first.get();
         } else {
@@ -73,7 +73,7 @@ public class BookServiceImp implements BookService {
     }
 
     public boolean modifyField(Long id, Map<String, Object> updates) {
-        Optional<Book> toModify = bookList.stream().filter(book -> book.getId() == id).findFirst();
+        Optional<Book> toModify = bookList.stream().filter(book -> book.getBookId() == id).findFirst();
         if(!toModify.isPresent()) {
             return false;
         }
@@ -90,7 +90,7 @@ public class BookServiceImp implements BookService {
     }
 
     public boolean deleteBook(Long id) {
-        Optional<Book> toDelete = bookList.stream().filter(book -> book.getId() == id).findFirst();
+        Optional<Book> toDelete = bookList.stream().filter(book -> book.getBookId() == id).findFirst();
         boolean delete = bookList.remove(toDelete.get());
         return delete;
     }
