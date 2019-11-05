@@ -24,18 +24,19 @@ public class BookController {
     }
 
     @GetMapping("/")
-    public String getBooks(Model model) {
+    public String getBooks(@ModelAttribute("book") Book book, Model model) {
         List<Book> bookList = bookService.getBooks();
         model.addAttribute("books", bookList);
         model.addAttribute("newBook", new Book());
         model.addAttribute("newBookToAdd", new Book());
+        model.addAttribute("book", book);
         return "index";
     }
 
-    @GetMapping("/id")
-    public String findCarById(@ModelAttribute Long id, RedirectAttributes attributes) {
-        Book book = bookService.getBookById(id);
-        attributes.addFlashAttribute("bookById", book);
+    @PostMapping("byId")
+    public String findCarById(@ModelAttribute Book book, RedirectAttributes attributes) {
+        Book first = bookService.getBookById(book.getBookId());
+        attributes.addFlashAttribute("book", first);
         return "redirect:/";
     }
 

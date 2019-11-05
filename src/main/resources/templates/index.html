@@ -29,11 +29,18 @@
             <td><a th:href="@{|/delete/${bookStat.index}|}">Delete</a></td>
         </tr>
     </table>
-    <form th:action="@{/id}" method="post">
-        <p>Szukaj samochodu po jego id: <input type="number"></p>
+
+    <form th:action="@{/byId}" th:object="${book}" method="post">
+        <p>Szukaj samochodu po jego id: <input type="text" th:field="*{id}"></p>
         <input type="submit" value="Find by id">
     </form>
-    <p th:text="${bookById?.getTitle()}">Lalala</p>
+    <br>
+
+    PO ID:
+    <p>Id: <p th:text="${book.getBookId()}"></p></p>
+    <p>Isbn: <p th:text="${book.getIsbn()}"></p></p>
+    <p>Title: <p th:text="${book.getTitle()}"></p></p>
+    <p>Author: <p th:text="${book.getAuthor()}"></p></p>
 
     <form th:action="@{/addBook}" th:object="${newBook}" method="post">
         <p>Id: <input type="text" th:field="*{id}"></p>
