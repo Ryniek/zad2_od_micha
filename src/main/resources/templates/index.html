@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+</head>
+<body>
+    <h1>Books</h1>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Isbn</th>
+            <th>Title</th>
+            <th>Author</th>
+        </tr>
+        <tr th:each="book, bookStat: ${books}">
+            <td th:text="${book.getBookId()}"></td>
+            <td th:text="${book.getIsbn()}"></td>
+            <td th:text="${book.getTitle()}"></td>
+            <td th:text="${book.getAuthor()}"></td>
+            <td>
+                <form th:action="@{|/update/${bookStat.index}|}" th:object="${newBookToAdd}" method="post">
+                    <p>Isbn: <input type="text" th:field="*{isbn}"></p>
+                    <p>Title: <input type="text" th:field="*{title}"></p>
+                    <p>Author: <input type="text" th:field="*{author}"></p>
+                    <input type="submit" value="Update">
+                </form>
+            </td>
+            <td><a th:href="@{|/delete/${bookStat.index}|}">Delete</a></td>
+        </tr>
+    </table>
+    <form th:action="@{/id}" method="post">
+        <p>Szukaj samochodu po jego id: <input type="number"></p>
+        <input type="submit" value="Find by id">
+    </form>
+    <p th:text="${bookById?.getTitle()}">Lalala</p>
+
+    <form th:action="@{/addBook}" th:object="${newBook}" method="post">
+        <p>Id: <input type="text" th:field="*{id}"></p>
+        <p>Isbn: <input type="text" th:field="*{isbn}"></p>
+        <p>Title: <input type="text" th:field="*{title}"></p>
+        <p>Author: <input type="text" th:field="*{author}"></p>
+        <p><input type="submit" value="Add new book"></p>
+    </form>
+
+
+</body>
+</html>
